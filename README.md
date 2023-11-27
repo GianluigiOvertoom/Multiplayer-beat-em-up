@@ -98,6 +98,23 @@ public void HighlightElement(bool someCondition)
 ```
 <br />
 
+Reference parameters should be camelCase with an underscore if private.
+* _Bad:_
+``` csharp
+public void HighlightElement(bool someCondition)
+{
+ someCondition = someCondition;
+}
+```
+* _Good:_
+``` csharp
+public void HighlightElement(bool _someCondition)
+{
+ someCondition = _someCondition;
+}
+```
+<br />
+
 ## Best practices
 
 Always use access level modifiers.
