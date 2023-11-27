@@ -1,4 +1,5 @@
 # Beat'em-up Project
+A multiplayer Beat'em-up game made in Unity.
 
 ## Installations
 Unity version: 2022.3.14f1.<br />
@@ -103,14 +104,14 @@ Reference parameters should be camelCase with an underscore if private.
 ``` csharp
 public void HighlightElement(bool someCondition)
 {
- someCondition = someCondition;
+  someCondition = someCondition;
 }
 ```
 * _Good:_
 ``` csharp
 public void HighlightElement(bool _someCondition)
 {
- someCondition = _someCondition;
+  someCondition = _someCondition;
 }
 ```
 <br />
@@ -167,5 +168,5 @@ public void CreateSomething()
 ```
 <br />
 
-Sources:
+Sources: <br />
 https://avangarde-software.com/unity-coding-guidelines-basic-best-practices/
