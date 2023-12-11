@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private void Awake()
+    {
+        Application.targetFrameRate = 120;
+        QualitySettings.vSyncCount = 1;
+    }
     private void Start()
     {
-        Input.BindInput();
-        Input.EnableMenuInput();
+        Input.Enable();
         Input.EnableGamePlayInput();
     }
 }

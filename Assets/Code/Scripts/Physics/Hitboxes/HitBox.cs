@@ -1,12 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum HitType
+public enum DamageType
 {
-    basic,
-    up,
+    hit,
     back,
+    up,
     down
+}
+public class DamageData
+{
+    public float Damage;
+    public DamageType Type;
+    public bool Vortex;
+    public float VerticalForce;
+    public float HorizontalForce;
+    public DamageData(float damage, DamageType damageType = DamageType.hit, bool vortex = false, float verticalForce = 0, float horizontalForce = 0)
+    {
+        Damage = damage;
+        Type = damageType;
+        Vortex = vortex;
+        VerticalForce = verticalForce;
+        HorizontalForce = horizontalForce;
+    }
 }
 
 public class HitBox
@@ -18,42 +34,35 @@ public class HitBox
     public Color Color;
     public Vector3 Point;
     public Vector3 Size;
-    public float Damage;
+    public DamageData Damage;
 
-    //Enemy only
-    public HitType HitType;
-    public bool Vortex;
-
-    private Vector3 offset;
+    public Vector3 Offset;
     private LayerMask layer;
 
-    public HitBox(string name, GameObject parent, Vector3 size, float direction, Vector3 offset, LayerMask layer, float damage = 0f, Color color = default, HitType hitType = HitType.basic, bool vortex = false)
+    public HitBox(string name, GameObject parent, Vector3 size, float direction, Vector2 _offset, LayerMask _layer, DamageData damage = null, Color color = default)
     {
         Tag = name;
         Parent = parent;
         Size = size;
-        this.offset = offset;
-        this.layer = layer;
+        Offset = _offset;
+        layer = _layer;
         Damage = damage;
         if (color == default)
             Color = Color.white;
         else
             Color = color;
 
-        HitType = hitType;
-        Vortex = vortex;
-
         UpdatePointPosition(direction);
     }
 
-    public void UpdatePointPosition(float direction = 1f) => Point = (Vector3)Parent.transform.position + new Vector3(offset.x * direction, offset.y, offset.z);
+    public void UpdatePointPosition(float direction = 1f) => Point = (Vector3)Parent.transform.position + new Vector3(Offset.x * direction, Offset.y);
 
     public List<GameObject> Cast()
     {
-        foreach (Collider intersections in Physics.OverlapBox(Point, Size, Quaternion.identity, layer))
+        foreach (Collider intersection in Physics.OverlapBox(Point, Size, Quaternion.identity, layer))
         {
-            if (!this.intersections.Contains(intersections.gameObject))
-                this.intersections.Add(intersections.gameObject);
+            if (!intersections.Contains(intersection.gameObject))
+                intersections.Add(intersection.gameObject);
         }
         return intersections;
     }

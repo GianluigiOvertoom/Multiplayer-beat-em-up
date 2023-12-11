@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -40,9 +41,7 @@ public static class HitBoxes
         foreach (HitBox hitBox in HitBoxList)
         {
             GameObject parent = hitBox.Parent;
-            float damage = hitBox.Damage;
-            HitType hitType = hitBox.HitType;
-            bool vortex = hitBox.Vortex;
+            DamageData damage = hitBox.Damage;
             if (hitBox.Tag == name)
             {               
                 foreach (GameObject target in hitBox.Cast())
@@ -52,7 +51,10 @@ public static class HitBoxes
                     {
                         hitboxCollection.Targets.Add(target);
                         Entity entity = target.GetComponent<Entity>();
-                        entity.HitBoxInteraction(parent, damage, hitType, vortex);
+                        if (entity.CanBeHit)
+                        {
+                            entity.HitBoxInteraction(parent, damage);
+                        }
                     }                 
                 }
             }
